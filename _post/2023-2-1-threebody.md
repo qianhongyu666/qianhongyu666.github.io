@@ -1,3 +1,14 @@
+---
+layout:     post
+title:      Threebody题目
+subtitle:   一道尛题
+date:       2023-2-1
+author:     LZY
+header-img: img/post-bg-recitewords.jpg
+catalog: false
+tags:
+    - 随笔杂谈
+---
 # 三体系列：文明的存亡
 
 ## 题目描述
@@ -30,7 +41,7 @@
 
 他足智多谋
 
-人们称他为“邢老师”
+人们称他为“黄老师”
 
 他将给你文明的铁铠
 
