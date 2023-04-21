@@ -8,7 +8,7 @@ $(".list").click(function (e) {
         Merit = 0;
         $(".text .text_1").text("当前功德：" + Merit);
     } else if (data == "about") {
-        alert("源码下载：www.inizhe.com")
+        alert("BY liuzheyi666")
     } else if (data == "hide") {
         
     }
