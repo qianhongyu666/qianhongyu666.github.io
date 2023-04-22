@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'">
+		<title>MC 指令生成器 by OCEAN</title>
+	</head>
+	<link rel="shortcut icon" href="img/colorblock_logo.png">
+	<link rel="stylesheet" href="css/style.css">
+	<script src="js/jQuery v3.4.1.min.js"></script>
+	<body>
+		<div class="option">
+			<img class="set" src="img/set1.png" alt="">
+		</div>
+		<div class="Navigation-bar">
+			<button>指令生成器</button>
+			<button>资源</button>
+			<!-- <button>指令版本转换</button> -->
+		</div>
+		<div class="cmd_Generator" id="chunks">
+			<!-- Generator生成 -->
+			<div class="left_box">
+
+				<button class="swith_cmd_Generator_way">JAVA 1.12.2原版</button>
+				<button class="swith_cmd_Generator_way">colorblock 1.16.5版</button>
+				<button class="swith_cmd_Generator_way">colorblock 其他命令</button>
+				<!-- <button class="swith_cmd_Generator_way">colorblock 1.12.2版</button> -->
+
+				<div class="slide_left">
+					<!-- JAVA 1.12.2 原版 -->
+					<fieldset class="slide_left_wrapper">
+						<br>
+						<table border="0">
+							<tr>
+								<td>粒子名称：</td>
+								<td>
+									<select id="cmdName_select" title="选择所需要展示的粒子">
+
+									</select>
+								</td>
+								<td></td>
+								<td></td>
+							</tr>
+							<tr title="设置在游戏中粒子的 xyz 位置">
+								<td>坐标：</td>
+								<td> <input type="text" class="axis" id="axis_x" value="x" /></td>
+								<td> <input type="text" class="axis" id="axis_y" value="y" /></td>
+								<td> <input type="text" class="axis" id="axis_z" value="z" /></td>
+							</tr>
+							<tr title="设置向 xyz 方向偏移的量">
+								<td>移动坐标：</td>
+								<td> <input type="text" class="axis" id="move_x" value="vx" /></td>
+								<td> <input type="text" class="axis" id="move_y" value="vy" /></td>
+								<td> <input type="text" class="axis" id="move_z" value="vz" /></td>
+							</tr>
+							<tr>
+								<td>移动速度：</td>
+								<td> <input type="text" class="axis" id="spread_speed" value="0"  title="设置向 xyz 方向偏移的速度. 距离公式：[移动距离 = （移动速度 * 8） * 移动坐标]"/></td>
+							</tr>
+							<tr>
+								<td>粒子数量：</td>
+								<td> <input type="text" class="axis" id="particle_num" value="1" title="设置一次性生成的粒子数量"/></td>
+							</tr>
+							<tr>
+								<td>可视距离：</td>
+								<td id="radio_vision_range">
+									<input type="radio" name="vision_range" value="normal" checked='checked'
+										id="vision_range" /> 32格
+									<input type="radio" name="vision_range" value="force" id="vision_range" /> 256格
+								</td>
+							</tr>
+							<tr>
+								<td>生成指令：</td>
+								<td><button class="cmd_build" id="cmd_build"> 生成指令 </button></td>
+							</tr>
+
+						</table>
+						<br>
+						<p class="p">vx vy vz：移动向量（1 = 8 m(格)）</p>
+						<p class="p"> 无需所有单元格都输入，为空的单元格将会启用默认值，您无需担心 </p><br>
+
+					</fieldset>
+					<!-- colorBlock 1.16.5 模组 -->
+					<fieldset class="slide_left_wrapper">
+						<!-- <legend> &nbsp;&nbsp; </legend> -->
+						<br>
+						<table>
+							<tr>
+								<td>模式：</td>
+								<td>
+									<select id="way">
+										<option value="parameter">直角坐标式</option>
+										<option value="normal">原版拓展</option> 
+										<option value="polarparameter">极坐标式</option>
+										<option value="conditional">条件式</option>
+										<option value="image">图像打印</option>
+									</select>
+								</td>
+							</tr>
+						</table>
+						
+						<table border="1" class="wayTable" id="normal_table">
+							<tr>
+								<td>粒子名称：</td>
+								<td><select class="cmdName_select" id="normal_cmdName_select" title="选择所需要展示的粒子"></select></td>
+							</tr>
+							<tr title="设置在游戏中粒子的位置">
+								<td>坐标：</td>
+								<td> <input type="text" class="axis" id="normal_x" value="x" /></td>
+								<td> <input type="text" class="axis" id="normal_y" value="y" /></td>
+								<td> <input type="text" class="axis" id="normal_z" value="z" /></td>
+							</tr>
+							<tr>
+								<td title="(红, 黄, 蓝, 不透明度)">粒子颜色(rgba)：</td>
+								<td> <input type="text" class="pColor" id="normal_PColor" value="(255, 255, 255, 1)" />
+								</td>
+							</tr>
+							<tr>
+								<td>移动坐标：</td>
+								<td> <input type="text" class="axis" id="normal_vx" value="vx" /></td>
+								<td> <input type="text" class="axis" id="normal_vy" value="vy" /></td>
+								<td> <input type="text" class="axis" id="normal_vz" value="vz" /></td>
+							</tr>
+							<tr>
+								<td>生成范围：</td>
+								<td> <input type="text" class="axis" id="normal_rx" value="rx" /></td>
+								<td> <input type="text" class="axis" id="normal_ry" value="ry" /></td>
+								<td> <input type="text" class="axis" id="normal_rz" value="rz" /></td>
+							</tr>
+							<tr>
+								<td>数量：</td>
+								<td> <input type="text" class="axis" id="normal_count" value="1" /></td>
+							</tr>
+							<tr>
+								<td>生命周期：</td>
+								<td> <input type="text" class="axis" id="normal_age" value="0" /></td>
+							</tr>
+							<tr>
+								<td>速度表达式：</td>
+								<td colspan="3"> 
+									<input type="text" class="speed_expression" id="normal_speed_expression" value="vy=0.1"/>
+									<div class="hideExpression" id="speed_hideExpression">
+										<ul>
+											<li value="null"><p>无速度</p><p>null</p></li>
+											<li value="vy=0.1"><p>漂浮</p><p>vy=0.1</p></li>
+											<li value="(vx,vy,vz)=((random(),random(),random())-0.5)*t/100"><p>随机移动</p><p>(vx,vy,vz)=((random(),random(),random())-0.5)*t/100</p></li>
+											<li value="cr=sin(t/7)/2+0.5;cg=sin(t/5)/2+0.5;cb=sin(t/3)/2+0.5"><p>RGB变色</p><p>cr=sin(t/7)/2+0.5;cg=sin(t/5)/2+0.5;cb=sin(t/3)/2+0.5</p></li>
+											<li value="a=0.05;(vx,,vy,,vz)=(-sin(a),0,-cos(a),,0,1,0,,cos(a),0,-sin(a))*(x*2*sin(a),,0.1,,z*2*sin(a))"><p>旋转</p> <p>a=0.05;(vx,,vy,,vz)=(-sin(a),0,-cos(a),,0,1,0,,cos(a),0,-sin(a))*(x*2*sin(a),,0.1,,z*2*sin(a))</p></li>
+										</ul>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td>生成指令：</td>
+								<td><button class="cmd_build" id="parameter_cmdBuild" title="未输入单元将视为默认值"> 生成指令 </button>
+								</td>
+							</tr>
+						</table>
+						
+						<table border="0" class="wayTable" id="parameter_table">
+							<tr>
+								<td>粒子名称：</td>
+								<td>
+									<select class="cmdName_select" id="parameter_cmdName_select" title="选择所需要展示的粒子">
+										
+									</select>
+								</td>
+							</tr>
+							<tr title="设置在游戏中粒子的位置">
+								<td>坐标：</td>
+								<td> <input type="text" class="axis" id="parameter_x" value="x" /></td>
+								<td> <input type="text" class="axis" id="parameter_y" value="y" /></td>
+								<td> <input type="text" class="axis" id="parameter_z" value="z" /></td>
+							</tr>
+							<tr>
+								<td title="(红, 黄, 蓝, 不透明度)">粒子颜色(rgba)：</td>
+								<td> <input type="text" class="pColor" id="parameter_pColor" value="(255, 255, 255, 1)" />
+								</td>
+							</tr>
+							<tr>
+								<td>移动坐标：</td>
+								<td> <input type="text" class="axis" id="parameter_vx" value="vx" /></td>
+								<td> <input type="text" class="axis" id="parameter_vy" value="vy" /></td>
+								<td> <input type="text" class="axis" id="parameter_vz" value="vz" /></td>
+							</tr>
+							<tr>
+								<td>定义域（t）：</td>
+								<td> <input type="text" class="axis" id="parameter_domain_begin" value="begin" /> </td>
+								<td> <input type="text" class="axis" id="parameter_domain_end" value="end" /></td>
+							</tr>
+							<tr>
+								<td>表达式：</td>
+								<td colspan="3"> <input type="text" class="expression" id="parameter_expression" value="x=t;y=sin(t)"/>
+									<div class="hideExpression" id="hideExpression">
+										<ul>
+											<li value="x=t;y=t"><p>一次函数</p><p>x=t;y=t</p></li>
+											<li value="x=t;y=t^2"><p>二次函数</p><p>x=t;y=t^2</p></li>
+											<li value="x=t;y=sin(t)"><p>三角函数</p><p>x=t;y=sin(t)</p></li>
+										</ul>
+									</div>
+								</td>
+							<tr>
+								<td>间隔密度：</td>
+								<td> <input type="text" class="axis" id="parameter_step" value="0.1" /></td>
+							</tr>
+							<tr>
+								<td>
+									生长动画：
+								</td>
+								<td id="radio_vision_range">
+									<div class="cpt_box" id="parameter_cpt_box">
+										<span class="row_status" id="parameter_row_status">关</span>
+									</div>
+								</td>
+								<td id="td_parameter_cpt">
+									<input type="text" class="cpt" id="parameter_cpt" value="cpt" />
+								</td>
+							</tr>
+							<tr>
+								<td title="单位：tick，1s = 20t">存在时间(t)：</td>
+								<td> <input type="text" class="axis" id="parameter_age" value="0" /></td>
+							</tr>
+							<tr>
+								<td>速度表达式：</td>
+								<td colspan="3"> <input type="text" class="speed_expression" id="parameter_speed_expression" value="vy=0.1" />
+									<div class="hideExpression" id="speed_hideExpression">
+										<ul>
+											<li value="null"><p>无速度</p><p>null</p></li>
+											<li value="vy=0.1"><p>漂浮</p><p>vy=0.1</p></li>
+											<li value="(vx,vy,vz)=((random(),random(),random())-0.5)*t/100"><p>随机移动</p><p>(vx,vy,vz)=((random(),random(),random())-0.5)*t/100</p></li>
+											<li value="cr=sin(t/7)/2+0.5;cg=sin(t/5)/2+0.5;cb=sin(t/3)/2+0.5"><p>RGB变色</p><p>cr=sin(t/7)/2+0.5;cg=sin(t/5)/2+0.5;cb=sin(t/3)/2+0.5</p></li>
+											<li value="a=0.05;(vx,,vy,,vz)=(-sin(a),0,-cos(a),,0,1,0,,cos(a),0,-sin(a))*(x*2*sin(a),,0.1,,z*2*sin(a))"><p>旋转</p> <p>a=0.05;(vx,,vy,,vz)=(-sin(a),0,-cos(a),,0,1,0,,cos(a),0,-sin(a))*(x*2*sin(a),,0.1,,z*2*sin(a))</p></li>
+										</ul>
+									</div>
+								</td>
+							<tr>
+								<td>生成指令：</td>
+								<td><button class="cmd_build" id="parameter_cmdBuild" title="未输入单元将视为默认值"> 生成指令 </button>
+								</td>
+							</tr>
+						</table>
+
+						<table border="0" class="wayTable" id="polarparameter_table">
+							<tr>
+								<td>粒子名称：</td>
+								<td><select class="cmdName_select" id="polarparameter_cmdName_select" title="选择所需要展示的粒子"></select></td>
+							</tr>
+							<tr title="设置在游戏中粒子的位置">
+								<td>坐标：</td>
+								<td> <input type="text" class="axis" id="polarparameter_x" value="x" /></td>
+								<td> <input type="text" class="axis" id="polarparameter_y" value="y" /></td>
+								<td> <input type="text" class="axis" id="polarparameter_z" value="z" /></td>
+							</tr>
+							<tr>
+								<td title="(红, 黄, 蓝, 不透明度)">粒子颜色(rgba)：</td>
+								<td> <input type="text" class="pColor" id="polarparameter_pColor" value="(255, 255, 255, 1)" />
+								</td>
+							</tr>
+							<tr>
+								<td>移动坐标：</td>
+								<td> <input type="text" class="axis" id="polarparameter_vx" value="vx" /></td>
+								<td> <input type="text" class="axis" id="polarparameter_vy" value="vy" /></td>
+								<td> <input type="text" class="axis" id="polarparameter_vz" value="vz" /></td>
+							</tr>
+							<tr>
+								<td>定义域（t）：</td>
+								<td> <input type="text" class="axis" id="polarparameter_domain_begin" value="begin" /> </td>
+								<td> <input type="text" class="axis" id="polarparameter_domain_end" value="end" /></td>
+							</tr>
+							<tr>
+								<td>表达式：</td>
+								<td colspan="3"> 
+									<input type="text" class="expression" id="polarparameter_expression" value="s1,s2,dis=t*10,t*PI/20,1" />
+									
+									<div class="hideExpression" id="hideExpression">
+										<ul>
+											<li value="dis=1;s1=0;s2=t"><p>圆</p><p>dis=1;s1=0;s2=t</p></li>
+											<li value="s1,s2,dis=t*10,t*PI/20,1"><p>球</p><p>s1,s2,dis=t*10,t*PI/20,1</p></li>
+											<li value="s1,s2,dis=t*10,t*PI/200,t%2+10"><p>散点圈</p> <p>s1,s2,dis=t*10,t*PI/200,t%2+10</p></li>
+										</ul>
+									</div>
+								</td>
+							<tr>
+								<td>间隔密度：</td>
+								<td> <input type="text" class="axis" id="polarparameter_step" value="0.1" /></td>
+							</tr>
+							<tr>
+								<td>
+									生长动画：
+								</td>
+								<td id="radio_vision_range">
+									<div class="cpt_box" id="polarparameter_cpt_box">
+										<span class="row_status" id="polarparameter_row_status">关</span>
+									</div>
+								</td>
+								<td id="td_polarparameter_cpt">
+									<input type="text" class="cpt" id="polarparameter_cpt" value="cpt" />
+								</td>
+							</tr>
+							<tr>
+								<td title="单位：tick，1s = 20t">存在时间(t)：</td>
+								<td> <input type="text" class="axis" id="polarparameter_age" value="0" /></td>
+							</tr>
+							<tr>
+								<td>速度表达式：</td>
+								<td colspan="3"> 
+									<input type="text" class="speed_expression" id="polarparameter_speed_expression" value="vy=0.1" />
+									<div class="hideExpression" id="speed_hideExpression">
+										<ul>
+											<li value="null"><p>无速度</p><p>null</p></li>
+											<li value="vy=0.1"><p>漂浮</p><p>vy=0.1</p></li>
+											<li value="(vx,vy,vz)=((random(),random(),random())-0.5)*t/100"><p>随机移动</p><p>(vx,vy,vz)=((random(),random(),random())-0.5)*t/100</p></li>
+											<li value="cr=sin(t/7)/2+0.5;cg=sin(t/5)/2+0.5;cb=sin(t/3)/2+0.5"><p>RGB变色</p><p>cr=sin(t/7)/2+0.5;cg=sin(t/5)/2+0.5;cb=sin(t/3)/2+0.5</p></li>
+											<li value="a=0.05;(vx,,vy,,vz)=(-sin(a),0,-cos(a),,0,1,0,,cos(a),0,-sin(a))*(x*2*sin(a),,0.1,,z*2*sin(a))"><p>旋转</p> <p>a=0.05;(vx,,vy,,vz)=(-sin(a),0,-cos(a),,0,1,0,,cos(a),0,-sin(a))*(x*2*sin(a),,0.1,,z*2*sin(a))</p></li>
+										</ul>
+									</div>
+								</td>
+								
+							</tr>
+							<tr>
+								<td>生成指令：</td>
+								<td><button class="cmd_build" id="polarparameter_cmdBuild" title="未输入单元将视为默认值"> 生成指令 </button>
+								</td>
+							</tr>
+						</table>
+						
+						<table border="0" class="wayTable" id="conditional_table">
+							<tr>
+								<td>粒子名称：</td>
+								<td><select class="cmdName_select" id="conditional_cmdName_select" title="选择所需要展示的粒子"></select></td>
+							</tr>
+							<tr title="设置在游戏中粒子的位置">
+								<td>坐标：</td>
+								<td> <input type="text" class="axis" id="conditional_x" value="x" /></td>
+								<td> <input type="text" class="axis" id="conditional_y" value="y" /></td>
+								<td> <input type="text" class="axis" id="conditional_z" value="z" /></td>
+							</tr>
+							<tr>
+								<td title="(红, 黄, 蓝, 不透明度)">粒子颜色(rgba)：</td>
+								<td> <input type="text" class="pColor" id="conditional_pColor" value="(255, 255, 255, 1)" />
+								</td>
+							</tr>
+							<tr>
+								<td>移动坐标：</td>
+								<td> <input type="text" class="axis" id="conditional_vx" value="vx" /></td>
+								<td> <input type="text" class="axis" id="conditional_vy" value="vy" /></td>
+								<td> <input type="text" class="axis" id="conditional_vz" value="vz" /></td>
+							</tr>
+							<tr>
+								<td>生成范围：</td>
+								<td> <input type="text" class="axis" id="conditional_rx" value="rx" /></td>
+								<td> <input type="text" class="axis" id="conditional_ry" value="ry" /></td>
+								<td> <input type="text" class="axis" id="conditional_rz" value="rz" /></td>
+							</tr>
+							<tr>
+								<td>表达式：</td>
+								<td colspan="3"> 
+									<input type="text" class="expression" id="conditional_expression" value="s1,s2,dis=t*10,t*PI/20,1" list="conditional_expressions" />
+									<datalist id="conditional_expressions">
+									<div class="hideExpression" id="hideExpression">
+										<ul>
+											<li value="(abs(y)==0.5&!(abs(z)<0.5))|(abs(x)==0.5&(!(abs(z)<0.5)|!(abs(y)<0.5)))"><p>正方体</p><p>null</p></li>
+										</ul>
+									</div>
+								</td>
+							<tr>
+								<td>间隔密度：</td>
+								<td> <input type="text" class="axis" id="conditional_step" value="0.1" /></td>
+							</tr>
+							<tr>
+								<td title="单位：tick，1s = 20t">存在时间(t)：</td>
+								<td> <input type="text" class="axis" id="conditional_age" value="0" /></td>
+							</tr>
+							<tr>
+								<td>速度表达式：</td>
+								<td colspan="3"> 
+									<input type="text" class="speed_expression" id="conditional_speed_expression" value="vy=0.1" list="speed_expression" />
+									<div class="hideExpression" id="speed_hideExpression">
+										<ul>
+											<li value="null"><p>无速度</p><p>null</p></li>
+											<li value="vy=0.1"><p>漂浮</p><p>vy=0.1</p></li>
+											<li value="(vx,vy,vz)=((random(),random(),random())-0.5)*t/100"><p>随机移动</p><p>(vx,vy,vz)=((random(),random(),random())-0.5)*t/100</p></li>
+											<li value="cr=sin(t/7)/2+0.5;cg=sin(t/5)/2+0.5;cb=sin(t/3)/2+0.5"><p>RGB变色</p><p>cr=sin(t/7)/2+0.5;cg=sin(t/5)/2+0.5;cb=sin(t/3)/2+0.5</p></li>
+											<li value="a=0.05;(vx,,vy,,vz)=(-sin(a),0,-cos(a),,0,1,0,,cos(a),0,-sin(a))*(x*2*sin(a),,0.1,,z*2*sin(a))"><p>旋转</p> <p>a=0.05;(vx,,vy,,vz)=(-sin(a),0,-cos(a),,0,1,0,,cos(a),0,-sin(a))*(x*2*sin(a),,0.1,,z*2*sin(a))</p></li>
+										</ul>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td>生成指令：</td>
+								<td><button class="cmd_build" id="conditional_cmdBuild" title="未输入单元将视为默认值"> 生成指令 </button>
+								</td>
+							</tr>
+						</table>
+						
+						<table border="0" class="wayTable" id="image_table">
+							<tr>
+								<td>粒子名称：</td>
+								<td><select class="cmdName_select" id="image_cmdName_select" title="选择所需要展示的粒子"></select></td>
+							</tr>
+							<tr title="设置在游戏中粒子的位置">
+								<td>坐标：</td>
+								<td> <input type="text" class="axis" id="image_x" value="x" /></td>
+								<td> <input type="text" class="axis" id="image_y" value="y" /></td>
+								<td> <input type="text" class="axis" id="image_z" value="z" /></td>
+							</tr>
+							<tr>
+								<td>路径：</td>
+								<td> <input type="text" class="axis" id="image_path" value="path"  title="图片名.后缀名"/></td>
+							</tr>
+							<tr>
+								<td colspan="4">
+									<p class="p">将图片放在 <span class="iamge_span">particleImages</span> 文件夹内（mod的同级文件夹），这很重要！</p>
+								</td>
+							</tr>
+							<tr>
+								<td>比例：</td>
+								<td> <input type="text" class="axis" id="image_scaling" value="scaling" /></td>
+							</tr>
+							<tr>
+								<td>旋转</td>
+								<td> <input type="text" class="axis" id="image_rotateX" value="rotateX" /></td>
+								<td> <input type="text" class="axis" id="image_rotateY" value="rotateY" /></td>
+								<td> <input type="text" class="axis" id="image_rotateZ" value="rotateZ" /></td>
+							</tr>
+							<tr>
+								<td>空翻：</td>
+								<td> 
+									<select class="select" id="image_flip_select">
+										<option value='not'>无</option>
+										<option value='horizontally'>水平</option>
+										<option value='vertical'>垂直</option>
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<td>dpb：</td>
+								<td> <input type="text" class="axis" id="image_dpb" value="dpb" /></td>
+							</tr>
+							<tr>
+								<td>移动坐标：</td>
+								<td> <input type="text" class="axis" id="image_vx" value="vx" /></td>
+								<td> <input type="text" class="axis" id="image_vy" value="vy" /></td>
+								<td> <input type="text" class="axis" id="image_vz" value="vz" /></td>
+							</tr>
+							<tr>
+								<td>生命周期：</td>
+								<td> <input type="text" class="axis" id="image_age" value="0" /></td>
+							</tr>
+							<tr>
+								<td>速度表达式：</td>
+								<td colspan="3"> 
+									<input type="text" class="speed_expression" id="image_speed_expression" value="vy=0.1" list="image_speed_expressions" />
+									<div class="hideExpression" id="speed_hideExpression">
+										<ul>
+											<li value="null"><p>无速度</p><p>null</p></li>
+											<li value="vy=0.1"><p>漂浮</p><p>vy=0.1</p></li>
+											<li value="t=t-50;x=sin(t)*t/15;y=t/5"><p>RGB变色</p><p>t=t-50;x=sin(t)*t/15;y=t/5</p></li>
+											<li value="(vx,vy,vz)=((random(),random(),random())-0.5)*t/100"><p>随机移动</p><p>(vx,vy,vz)=((random(),random(),random())-0.5)*t/100</p></li>
+											<li value="a=0.05;(vx,,vy,,vz)=(-sin(a),0,-cos(a),,0,1,0,,cos(a),0,-sin(a))*(x*2*sin(a),,0.1,,z*2*sin(a))"><p>旋转</p> <p>a=0.05;(vx,,vy,,vz)=(-sin(a),0,-cos(a),,0,1,0,,cos(a),0,-sin(a))*(x*2*sin(a),,0.1,,z*2*sin(a))</p></li>
+										</ul>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td>生成指令：</td>
+								<td><button class="cmd_build" id="image_cmdBuild" title="未输入单元将视为默认值"> 生成指令 </button>
+								</td>
+							</tr>
+						</table>
+						
+						<br>
+
+					</fieldset>
+
+					<fieldset class="slide_left_wrapper">
+						<br>
+						<table border="1">
+							<tr>
+								<td>清除粒子：</td>
+								<td colspan="3"> <input type="text" class="cmdIpt" value="/particleex clearparticle"> </td>
+								<td> <button class="cmdIpt_copy">复制</button> </td>
+							</tr>
+							<tr>
+								<td>清除缓存：</td>
+								<td colspan="3"> <input type="text" class="cmdIpt" value="/particleex clearcache"> </td>
+								<td> <button class="cmdIpt_copy">复制</button> </td>
+							</tr>
+						</table>
+						<br>
+					</fieldset>
+				</div>
+				<div class="doubt_box">
+					<h3>指令语法格式</h3>
+					<p>/particle [粒子名] x y z vx vy vz [扩散速度] [粒子数量] [可视距离]</p>
+					<p>未输入的单元格将启用系统默认值，您无需每一个都输入。</p>
+				</div>
+			</div>
+			
+			<div class="right_box">
+				<br>
+				<fieldset class="output_cmd">
+					<legend> &nbsp;命令输出窗口&nbsp; </legend>
+
+					<div class="output_destination">
+
+					</div>
+				</fieldset>
+				<p class="p">注：使用 colorBlock 指令前，请安装 <a href="">fabirc</a> 和 <a href="">colorBlock 1.16.5</a>版本模组，否则无效</p>
+			</div>
+		</div>
+		<div class="resource" id="chunks">
+			<ul class="listUl">
+				<h1>resource</h1>
+				<li>粒子名称</li>
+				<li>案例</li>
+				<li>教程</li>
+				<li>function结合</li>
+				<li>粒子光效</li>
+				<li>延时摄影</li>
+			</ul>
+			<div class="chunks-resource-box">
+				<h1>JAVA 1.16.5 <input class="chunks-resource-box1_search" type="search" placeholder="搜索"></h1>
+				
+			</div>
+			<div class="chunks-resource-box">
+				<h1>ColorBlock 1.16.5</h1>
+				
+			</div>
+			<div class="chunks-resource-box">
+				<h1>ColorBlock 教程</h1>
+				<a href="https://www.bilibili.com/video/BV1984y1s79M/?spm_id_from=333.999.list.card_archive.click&vd_source=9b29eedb391582851567a1bb5a3949fa">
+					<div class="card">
+						<img src="img/tutorial/unit1.jpg" alt="">
+						<p>【我的世界】ColorBlock 教程——更好的粒子</p>
+						<p>2022-12-25</p>
+					</div>
+				</a>
+				<a href="https://www.bilibili.com/video/BV1Ue4y137o7/?spm_id_from=pageDriver">
+					<div class="card">
+						<img src="img/tutorial/unit2.jpg" alt="">
+						<p>【我的世界】colorBlock 教程——赋予生命的粒子</p>
+						<p>2023-1-8</p>
+					</div>
+				</a>
+				<div class='ENDText'>-- END --</div>
+			</div>
+			<div class="chunks-resource-box">
+				<h1>resource-box4</h1>
+			</div>
+			<div class="chunks-resource-box">
+				<h1>resource-box5</h1>
+			</div>
+			<div class="chunks-resource-box">
+				<h1>resource-box6</h1>
+			</div>
+		</div>
+		<div class="resource" id="chunks">
+			<h1>建筑中..</h1>
+			
+		</div>
+		<div class="blackboard">
+
+		</div>
+		<div class="Messagebox">
+			<p id="copyText"></p>
+		</div>
+		
+		<div class="Welcome">
+			<h2>晚上好</h2>
+			<p>欢迎使用 colorBlock (/≧▽≦)/~ </p>
+		</div>
+
+		<div class="particle_color_board">
+			<div class="particle_color_board_close" id="particle_color_board_close"> × </div>
+			<p>选择粒子颜色</p>
+			<div class="btnColor" id="btnColor">
+				
+			</div>
+		
+			<div class="rbga_input_wrap">
+				<div class="rbga_input_float">
+					<div class="rbga_span">R：</div><input type="text" class="rbga_displayed" id="rbga_displayed_r"
+						value="" /><br>
+				</div>
+				<div class="rbga_input_float">
+					<div class="rbga_span">G：</div><input type="text" class="rbga_displayed" id="rbga_displayed_g"
+						value="" /><br>
+				</div>
+				<div class="rbga_input_float">
+					<div class="rbga_span">B：</div><input type="text" class="rbga_displayed" id="rbga_displayed_b"
+						value="" /><br>
+				</div>
+			</div>
+		
+			<div class="rbga_range_wrap">
+				<div class="rbga_range_span">A：</div>
+				<input type="range" class="range" value="100" id="alpha"><span id="alpha_show">100%</span>
+			</div>
+		
+			<br>
+			<button class="particle_color_cancel" id="particle_color_cancel">取消</button>
+			<button class="particle_color_save" id="particle_color_save">确定</button>
+		</div>
+
+		<div class="setBox">
+			<div class="setBox-closeWin"> × </div>
+			<h2 class="setBox-title">设置</h2>
+			<p>空空如也</p>
+		</div>
+	</body>
+
+	<div><!--  javascript -->
+		<script src="js/option/typesetting.js"></script>
+		<script src="js/function.js"></script>
+		<script src="js/index.js"></script>
+		<script src="js/cmd_Generator/1.12.2_normal.js"></script>
+		<script src="js/cmd_Generator/colorBlock 1.16.5/normal.js"></script>
+		<script src="js/cmd_Generator/particle_data.js"></script>
+		<script src="js/cmd_Generator/color_board.js"></script>
+		<script src="js/option/date.js"></script>
+		<script src="js/option/set.js"></script>
+	</div>
+</html>
