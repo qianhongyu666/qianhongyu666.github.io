@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>高考倒计时</title>
+<link rel="stylesheet" href="./css/style.css">
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f2f2f2;
+        }
+
+        .countdown-container {
+            text-align: center;
+            font-size: 24px;
+            color: #333;
+            background-color: #f7f7f7;
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        .countdown-item {
+            display: inline-block;
+            margin: 0 10px;
+            padding: 5px;
+            background-color: #e9e9e9;
+            border-radius: 4px;
+        }
+
+        .countdown-label {
+            font-size: 12px;
+            color: #777;
+        }
+        
+        .countdown-title {
+            font-size: 36px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .encouragement {
+            font-size: 18px;
+            margin-top: 20px;
+        }
+        
+        .button {
+            font-size: 16px;
+            padding: 10px 20px;
+            background-color: #009688;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<div class="components">
+			<!-- 组件所有元素 -->
+			<div class="main-button">
+				<!-- 按钮主体(圆) -->
+				<div class="moon"></div>
+				<div class="moon"></div>
+				<div class="moon"></div>
+				<!-- 月亮上的陨石坑 -->
+			</div>
+			<div class="daytime-backgrond"></div>
+			<div class="daytime-backgrond"></div>
+			<div class="daytime-backgrond"></div>
+			<!-- 按钮底层的三个虚影 -->
+			<div class="cloud">
+				<!-- 所有的云 -->
+				<div class="cloud-son"></div>
+				<div class="cloud-son"></div>
+				<div class="cloud-son"></div>
+				<div class="cloud-son"></div>
+				<div class="cloud-son"></div>
+				<div class="cloud-son"></div>
+			</div>
+			<div class="cloud-light cloud-float">
+				<!-- 云的虚影 -->
+				<div class="cloud-son"></div>
+				<div class="cloud-son"></div>
+				<div class="cloud-son"></div>
+				<div class="cloud-son"></div>
+				<div class="cloud-son"></div>
+				<div class="cloud-son"></div>
+			</div>
+			<div class="stars">
+				<!-- 所有星星，每一个星星由四个div拼合而成 -->
+				<div class="star big">
+					<div class="star-son"></div>
+					<div class="star-son"></div>
+					<div class="star-son"></div>
+					<div class="star-son"></div>
+				</div>
+				<div class="star big">
+					<div class="star-son"></div>
+					<div class="star-son"></div>
+					<div class="star-son"></div>
+					<div class="star-son"></div>
+				</div>
+				<div class="star medium">
+					<div class="star-son"></div>
+					<div class="star-son"></div>
+					<div class="star-son"></div>
+					<div class="star-son"></div>
+				</div>
+				<div class="star medium">
+					<div class="star-son"></div>
+					<div class="star-son"></div>
+					<div class="star-son"></div>
+					<div class="star-son"></div>
+				</div>
+				<div class="star medium">
+					<div class="star-son"></div>
+					<div class="star-son"></div>
+					<div class="star-son"></div>
+					<div class="star-son"></div>
+				</div>
+				<div class="star small">
+					<div class="star-son"></div>
+					<div class="star-son"></div>
+					<div class="star-son"></div>
+					<div class="star-son"></div>
+				</div>
+				<div class="star small">
+					<div class="star-son"></div>
+					<div class="star-son"></div>
+					<div class="star-son"></div>
+					<div class="star-son"></div>
+				</div>
+				<div class="star small">
+					<div class="star-son"></div>
+					<div class="star-son"></div>
+					<div class="star-son"></div>
+					<div class="star-son"></div>
+				</div>
+				<div class="star small">
+					<div class="star-son"></div>
+					<div class="star-son"></div>
+					<div class="star-son"></div>
+					<div class="star-son"></div>
+				</div>
+				<div class="star small">
+					<div class="star-son"></div>
+					<div class="star-son"></div>
+					<div class="star-son"></div>
+					<div class="star-son"></div>
+				</div>
+				<div class="star small">
+					<div class="star-son"></div>
+					<div class="star-son"></div>
+					<div class="star-son"></div>
+					<div class="star-son"></div>
+				</div>
+			</div>
+		</div>
+		
+		<script src="js/script.js"></script>
+<script type="text/javascript" src="https://cdn.bootcss.com/canvas-nest.js/1.0.1/canvas-nest.min.js"></script>　
+<script>
+!
+function() {
+    function n(n, e, t) {
+        return n.getAttribute(e) || t
+    }
+    function e(n) {
+        return document.getElementsByTagName(n)
+    }
+    function t() {
+        var t = e("script"),
+        o = t.length,
+        i = t[o - 1];
+        return {
+            l: o,
+            z: n(i, "zIndex", -1),
+            o: n(i, "opacity", .5),
+            c: n(i, "color", "0,0,0"),
+            n: n(i, "count", 99)
+        }
+    }
+    function o() {
+        a = m.width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth,
+        c = m.height = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight
+    }
+    function i() {
+        r.clearRect(0, 0, a, c);
+        var n, e, t, o, m, l;
+        s.forEach(function(i, x) {
+            for (i.x += i.xa, i.y += i.ya, i.xa *= i.x > a || i.x < 0 ? -1 : 1, i.ya *= i.y > c || i.y < 0 ? -1 : 1, r.fillRect(i.x - .5, i.y - .5, 1, 1), e = x + 1; e < u.length; e++) n = u[e],
+            null !== n.x && null !== n.y && (o = i.x - n.x, m = i.y - n.y, l = o * o + m * m, l < n.max && (n === y && l >= n.max / 2 && (i.x -= .03 * o, i.y -= .03 * m), t = (n.max - l) / n.max, r.beginPath(), r.lineWidth = t / 2, r.strokeStyle = "rgba(" + d.c + "," + (t + .2) + ")", r.moveTo(i.x, i.y), r.lineTo(n.x, n.y), r.stroke()))
+        }),
+        x(i)
+    }
+    var a, c, u, m = document.createElement("canvas"),
+    d = t(),
+    l = "c_n" + d.l,
+    r = m.getContext("2d"),
+    x = window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || window.oRequestAnimationFrame || window.msRequestAnimationFrame ||
+    function(n) {
+        window.setTimeout(n, 1e3 / 45)
+    },
+    w = Math.random,
+    y = {
+        x: null,
+        y: null,
+        max: 2e4
+    };
+    m.id = l,
+    m.style.cssText = "position:fixed;top:0;left:0;z-index:" + d.z + ";opacity:" + d.o,
+    e("body")[0].appendChild(m),
+    o(),
+    window.onresize = o,
+    window.onmousemove = function(n) {
+        n = n || window.event,
+        y.x = n.clientX,
+        y.y = n.clientY
+    },
+    window.onmouseout = function() {
+        y.x = null,
+        y.y = null
+    };
+    for (var s = [], f = 0; d.n > f; f++) {
+        var h = w() * a,
+        g = w() * c,
+        v = 2 * w() - 1,
+        p = 2 * w() - 1;
+        s.push({
+            x: h,
+            y: g,
+            xa: v,
+            ya: p,
+            max: 6e3
+        })
+    }
+    u = s.concat([y]),
+    setTimeout(function() {
+        i()
+    },
+    100)
+} ();
+</script>
+<script>
+function clickEffect() {
+  let balls = [];
+  let longPressed = false;
+  let longPress;
+  let multiplier = 0;
+  let width, height;
+  let origin;
+  let normal;
+  let ctx;
+  const colours = ["#F73859", "#14FFEC", "#00E0FF", "#FF99FE", "#FAF15D"];
+  const canvas = document.createElement("canvas");
+  document.body.appendChild(canvas);
+  canvas.setAttribute("style", "width: 100%; height: 100%; top: 0; left: 0; z-index: 99999; position: fixed; pointer-events: none;");
+  const pointer = document.createElement("span");
+  pointer.classList.add("pointer");
+  document.body.appendChild(pointer);
+ 
+  if (canvas.getContext && window.addEventListener) {
+    ctx = canvas.getContext("2d");
+    updateSize();
+    window.addEventListener('resize', updateSize, false);
+    loop();
+    window.addEventListener("mousedown", function(e) {
+      pushBalls(randBetween(10, 20), e.clientX, e.clientY);
+      document.body.classList.add("is-pressed");
+      longPress = setTimeout(function(){
+        document.body.classList.add("is-longpress");
+        longPressed = true;
+      }, 500);
+    }, false);
+    window.addEventListener("mouseup", function(e) {
+      clearInterval(longPress);
+      if (longPressed == true) {
+        document.body.classList.remove("is-longpress");
+        pushBalls(randBetween(50 + Math.ceil(multiplier), 100 + Math.ceil(multiplier)), e.clientX, e.clientY);
+        longPressed = false;
+      }
+      document.body.classList.remove("is-pressed");
+    }, false);
+    window.addEventListener("mousemove", function(e) {
+      let x = e.clientX;
+      let y = e.clientY;
+      pointer.style.top = y + "px";
+      pointer.style.left = x + "px";
+    }, false);
+  } else {
+    console.log("canvas or addEventListener is unsupported!");
+  }
+ 
+ 
+  function updateSize() {
+    canvas.width = window.innerWidth * 2;
+    canvas.height = window.innerHeight * 2;
+    canvas.style.width = window.innerWidth + 'px';
+    canvas.style.height = window.innerHeight + 'px';
+    ctx.scale(2, 2);
+    width = (canvas.width = window.innerWidth);
+    height = (canvas.height = window.innerHeight);
+    origin = {
+      x: width / 2,
+      y: height / 2
+    };
+    normal = {
+      x: width / 2,
+      y: height / 2
+    };
+  }
+  class Ball {
+    constructor(x = origin.x, y = origin.y) {
+      this.x = x;
+      this.y = y;
+      this.angle = Math.PI * 2 * Math.random();
+      if (longPressed == true) {
+        this.multiplier = randBetween(14 + multiplier, 15 + multiplier);
+      } else {
+        this.multiplier = randBetween(6, 12);
+      }
+      this.vx = (this.multiplier + Math.random() * 0.5) * Math.cos(this.angle);
+      this.vy = (this.multiplier + Math.random() * 0.5) * Math.sin(this.angle);
+      this.r = randBetween(8, 12) + 3 * Math.random();
+      this.color = colours[Math.floor(Math.random() * colours.length)];
+    }
+    update() {
+      this.x += this.vx - normal.x;
+      this.y += this.vy - normal.y;
+      normal.x = -2 / window.innerWidth * Math.sin(this.angle);
+      normal.y = -2 / window.innerHeight * Math.cos(this.angle);
+      this.r -= 0.3;
+      this.vx *= 0.9;
+      this.vy *= 0.9;
+    }
+  }
+ 
+  function pushBalls(count = 1, x = origin.x, y = origin.y) {
+    for (let i = 0; i < count; i++) {
+      balls.push(new Ball(x, y));
+    }
+  }
+ 
+  function randBetween(min, max) {
+    return Math.floor(Math.random() * max) + min;
+  }
+ 
+  function loop() {
+    ctx.fillStyle = "rgba(255, 255, 255, 0)";
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    for (let i = 0; i < balls.length; i++) {
+      let b = balls[i];
+      if (b.r < 0) continue;
+      ctx.fillStyle = b.color;
+      ctx.beginPath();
+      ctx.arc(b.x, b.y, b.r, 0, Math.PI * 2, false);
+      ctx.fill();
+      b.update();
+    }
+    if (longPressed == true) {
+      multiplier += 0.2;
+    } else if (!longPressed && multiplier >= 0) {
+      multiplier -= 0.4;
+    }
+    removeBall();
+    requestAnimationFrame(loop);
+  }
+ 
+  function removeBall() {
+    for (let i = 0; i < balls.length; i++) {
+      let b = balls[i];
+      if (b.x + b.r < 0 || b.x - b.r > width || b.y + b.r < 0 || b.y - b.r > height || b.r < 0) {
+        balls.splice(i, 1);
+      }
+    }
+  }
+}
+clickEffect();//调用特效函数
+</script>
+
+
+    <div class="countdown-container">
+        <h1 class="countdown-title">高考倒计时</h1>
+        <div class="countdown-item" id="days">
+            <span class="countdown-value"></span>
+            <span class="countdown-label">天</span>
+        </div>
+        <div class="countdown-item" id="hours">
+            <span class="countdown-value"></span>
+            <span class="countdown-label">小时</span>
+        </div>
+        <div class="countdown-item" id="minutes">
+            <span class="countdown-value"></span>
+            <span class="countdown-label">分钟</span>
+        </div>
+        <div class="countdown-item" id="seconds">
+            <span class="countdown-value"></span>
+            <span class="countdown-label">秒</span>
+        </div>
+        <p class="encouragement" id="encouragement">加油！相信自己，你一定能够取得好成绩！</p>
+        <button class="button" onclick="changeEncouragement()">换一句话</button>
+    </div>
+
+    <script>
+        // 设置目标日期
+        const targetDate = new Date('2028-06-07');
+
+        // 鼓励话语列表
+        const encouragements = [
+"相信自己，你可以做到！","坚持不懈，成功将属于你。","每一次进步都是一种胜利。","不要害怕失败，它是成功的前奏。","困难只会暂时阻挡你的道路。","你是独一无二的，别人无法取代。","做你自己，世界会为你欢呼。","旅程虽远，但值得一步步前行。","别忘了微笑，它有着神奇的力量。","尽管前方未知，相信自己的选择。",
+"勇敢面对挑战，你会变得更加强大。","不要让过去的失败影响你的未来。","每一天都是一个新的开始。","永远不要放弃自己的梦想。","你的努力终将得到回报。","坚持住，成功就在不远处。","相信自己的才华，你可以创造奇迹。","迈出第一步是远离成功的最大障碍。","相信自己，你比想象中更强大。","只有你自己能定义你的价值。",
+"一路努力，一路收获。","不要让别人的评判左右你的选择。","相信自己的直觉，它总是对的。","每天进步一点点，你将远离平庸。","永远保持学习的态度，你会不断进步。","不要害怕改变，它可能给你带来惊喜。","你是独一无二的，没有人可以替代你。","每一次尝试都是靠近成功的一步。","放下过去的遗憾，抓住现在的机会。","迈向你的目标，坚定不移。",
+"即使是最小的进步也值得庆祝。","克服恐惧，你将变得无所畏惧。","把握当下，过去的已经过去。","你拥有无限的潜力，只需发现。","用你的行动证明梦想是有可能实现的。","未来取决于你现在所做的选择。","勇敢面对挑战，你会发现自己的无限可能。","奋斗不止，成功将成为你的习惯。","相信自己的能力，你可以创造奇迹。","记住，每一天都是个新的开始。",
+"坚持下去，不要轻易放弃。","感谢过去，珍惜现在，期待未来。","你的信念将成为你前进的动力。","为了梦想努力奋斗，成功将不再遥远。","只有你能决定自己的幸福。","勇敢追求你热爱的事物，成功将随之而来。","做你自己，不为别人而活。","相信自己的能力，你可以超越自己。","无论遇到什么困难，坚持就是胜利。","每一步都让你离梦想更近一步。",
+"只要你去努力，就没有什么做不到的事。","珍惜每一次失败，它们是通往成功的必经之路。","每一份付出都不会白费。","用爱和善意对待他人，你会收获更多。","坚持不懈，成功就在不远处。","努力奋斗，纵使跌倒也要爬起来。","鼓起勇气，冲破自己的束缚。","积极思考，你会发现解决问题的方法。","你的努力不会被辜负，成功将会到来。","勇敢面对失败，它只是通向成功的必经之路。",
+"每一次努力都在改变你的人生。","做你自己，别被他人的眼光束缚。","困难不可怕，勇敢面对才是关键。","用心去感受生活中的美好。","每一天都是新的开始，追求你的梦想。","不要停下脚步，你会发现更美好的风景。","坚持就是力量，你可以战胜任何困难。","每个人都有自己的价值，不要低估自己。","相信自己，你能成为最好的自己。","不要畏惧失败，它是成功的代价。",
+"每一次尝试都是靠近成功的一步。","保持激情，你将拥有无限的动力。","专注于自己的目标，不要为别人而活。","不要害怕失败，它是成功的前奏。","你的梦想就在眼前，只需勇敢向前。","你所经历的一切都是成长的机会。","相信自己，你拥有无限的潜力。","不要胆怯，大胆迈出第一步。","保持积极向上的态度，你会看到奇迹。","每一天都是新的开始，把握当下。",
+"不拘一格，不随波逐流，做自己。","承担起失败带来的教训，继续前进。","面对困难时，找到突破口并坚持下去。","用行动来证明你的价值，而不是言语。","坚定地走向你的梦想，不要停下脚步。","成功只属于那些不断努力的人。","每一天都是一个全新的机会，抓住它。","即使是微小的进步也值得庆祝。","记住，你拥有实现梦想的能力。","相信自己的才华，你比你想象的更优秀。",
+"不要害怕失败，它是成功的基石。","保持专注，追求卓越，你将成就非凡。","勇往直前，成功将与你同行。","相信自己，你比你想象的更强大。","勇敢面对挑战，你将发现内心的力量。","成功需要付出努力和耐心，坚持不懈。","过去的已经过去，珍惜现在，期待未来。","每一次努力都是向梦想更近一步。","永不放弃，你的努力终将得到回报。","无论前方有多少困难，你都能战胜它们。",
+"相信自己，你可以战胜一切困难。","坚持下去，成功就在不远处。","每一天都是一个新的开始，抓住机会。","勇敢尝试新的事物，你会发现更多可能。","用心对待他人，你会收到同样的回报。","坚持追求梦想，即使路途艰辛也不放弃。","永远保持希望，明天会更好。","相信自己的选择，你会找到属于自己的道路。","记住，你的努力不会白费。","你的决心决定了你的成败。",
+"相信自己，你拥有无限的潜力。","尽力而为，没有遗憾。","继续前进，即使腿脚疲惫。","行动胜过空谈，勇往直前。","坚持不懈，你会看到收获。","做最好的自己，不用与他人比较。","相信自己的实力，你可以超越自己。","要有勇气追求自己的梦想。","每一次努力都在积累向前的动力。","坚持不懈是成功的重要保证。",
+"无论遭遇多少挫折，都要坚信自己。","过去不能左右未来，只能历史书中。","相信自己的选择，你不会后悔。","勇敢面对困难，成功将属于你。","珍惜机会，抓住每一个可能。","你的努力终将得到回报。","即使失败，也要坚持追求梦想。","相信自己的能力，你可以取得成功。","不要害怕改变，它可能给你带来意想不到的惊喜。","用心付出，收获将不可估量。",
+"迈出第一步是远离成功的最大障碍。","坚持不懈地追求梦想，它终将成真。","每一次尝试都是靠近目标的一步。","用微笑面对人生的起伏，你会更加坚强。","不要害怕失败，它是成长的过程。","即使路途艰辛，也别停下脚步。","相信自己，你比你想象的更出色。","投入行动而不是空谈，你会迈向成功。","每一次失败都是距离成功更近一步。","克服恐惧，你将发现新的可能性。",
+"坚持下去，即使进展缓慢。","相信自己，你能创造奇迹。","决心和毅力是成功的关键。","不要害怕改变，它带来的是成长。","勇敢面对挑战，你会找到解决方案。","用你的行动证明自己的价值。","无论遇到什么困难，坚持就是胜利。","保持热情，你会赢得更多的机会。","只要努力，没有做不到的事情。","每个人都有自己的光芒，发现你的闪光点。",
+"相信自己，你是无坚不摧的。","奋斗不止，你将越来越接近目标。","永不放弃，你会得到你想要的。","坚持就是胜利，你能战胜任何困难。","不要停下脚步，你还有更远的路要走。","每一天都是一个新的开始，把握住它。"
+        ];
+
+        // 更新鼓励话语
+        function updateEncouragement() {
+            const encouragementElement = document.getElementById('encouragement');
+            const randomIndex = Math.floor(Math.random() * encouragements.length);
+            const randomEncouragement = encouragements[randomIndex];
+            encouragementElement.textContent = randomEncouragement;
+        }
+
+        // 初始更新
+        updateEncouragement();
+
+        // 换一句话按钮点击事件处理函数
+        function changeEncouragement() {
+            updateEncouragement();
+        }
+
+        function updateCountdown() {
+            const currentDate = new Date();
+            const timeDifference = targetDate - currentDate;
+
+            // 计算倒计时的天、小时、分钟、秒数
+            const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
+
+            // 更新倒计时显示
+            document.getElementById('days').querySelector('.countdown-value').textContent = days;
+            document.getElementById('hours').querySelector('.countdown-value').textContent = hours;
+            document.getElementById('minutes').querySelector('.countdown-value').textContent = minutes;
+            document.getElementById('seconds').querySelector('.countdown-value').textContent = seconds;
+        }
+
+        // 初始更新
+        updateCountdown();
+
+        // 每秒更新一次倒计时
+        setInterval(updateCountdown, 1000);
+    </script>
+</body>
+</html>
